@@ -9,14 +9,23 @@ import { deleteContact } from '../../redux/contactsSlice';
 
 export const ContactList = () => {
   const contacts = useSelector(state => state.contacts);
+  const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
 
-  if (contacts.contacts.length === 0) {
-    return <NoContactsMessage>Your phonebook is empty!</NoContactsMessage>;
+  const visibleContacts = contacts.contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.filter.toLowerCase())
+  );
+
+  if (visibleContacts.length === 0) {
+    return (
+      <NoContactsMessage>
+        Sorry! No contacts in your phonebook!
+      </NoContactsMessage>
+    );
   }
   return (
     <List>
-      {contacts.contacts.map(contact => (
+      {visibleContacts.map(contact => (
         <ListItem key={contact.id}>
           {contact.name}:{''} {contact.number}
           <DeleteContactButton
