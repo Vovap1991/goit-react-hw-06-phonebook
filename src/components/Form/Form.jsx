@@ -10,13 +10,17 @@ import {
   StyledErrorName,
   StyledErrorNumber,
 } from './Form.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string().min(3, 'Too Short!').required('Required'),
   number: Yup.number().min(6).required('Required'),
 });
 
-export const ContactForm = ({ onAddContact }) => {
+export const ContactForm = () => {
+  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
@@ -25,7 +29,19 @@ export const ContactForm = ({ onAddContact }) => {
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, actions) => {
-        onAddContact({ ...values, id: nanoid() });
+        const enteredName = values.name;
+        const enteredNumber = values.number;
+
+        const isContactExists = contacts.contacts.find(
+          contact =>
+            contact.name.toLowerCase() === enteredName.toLowerCase() ||
+            contact.number === enteredNumber
+        );
+
+        if (isContactExists) {
+          return alert(`${enteredName} is already in your phonebook`);
+        }
+        dispatch(addContact({ id: nanoid(), ...values }));
         actions.resetForm();
       }}
     >
