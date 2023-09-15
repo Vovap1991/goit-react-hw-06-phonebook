@@ -32,3 +32,7 @@ export const DeleteContactButton = styled.button`
     background-color: #358ff0;
   }
 `;
+
+export const NoContactsMessage = styled.div`
+  font-size: 25px;
+`;
