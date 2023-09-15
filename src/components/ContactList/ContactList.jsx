@@ -6,10 +6,11 @@ import {
   NoContactsMessage,
 } from './ContactList.styled';
 import { deleteContact } from '../../redux/contactsSlice';
+import { getContacts, getFilter } from '../../redux/selectors';
 
 export const ContactList = () => {
-  const contacts = useSelector(state => state.contacts);
-  const filter = useSelector(state => state.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
   const visibleContacts = contacts.contacts.filter(contact =>
