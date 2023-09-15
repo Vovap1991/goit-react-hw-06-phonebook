@@ -28,6 +28,9 @@ export const FormInput = styled(Field)`
 `;
 
 export const FormButton = styled.button`
+  font-weight: 600;
+  margin-right: auto;
+  margin-left: auto;
   cursor: pointer;
   outline: none;
   width: 70%;
@@ -40,8 +43,9 @@ export const FormButton = styled.button`
   background-color: white;
   transition: background-color 300ms linear, color 300ms linear;
 
-  &:is(:focus, :hover) {
+  &:hover {
     color: white;
+
     background-color: #358ff0;
   }
 `;
